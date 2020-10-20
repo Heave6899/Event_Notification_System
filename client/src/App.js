@@ -10,12 +10,12 @@ export default class App extends Component {
   }
   componentDidMount(){
     const messaging = firebase.messaging()
-    messaging.requestPermission().then(()=>{
+    Notification.requestPermission().then(()=>{
       return messaging.getToken()
     }).then(token=>{
       console.log('Token :',token)
-    }).catch(()=>{
-      console.log('error')
+    }).catch(error=>{
+      console.log(error)
     })
   }
   render() {

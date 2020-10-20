@@ -6,8 +6,8 @@ const config = {
     projectId: "event-notification-syste-d8c65",
     storageBucket: "event-notification-syste-d8c65.appspot.com",
     messagingSenderId: "274433923057",
-    appId: "1:274433923057:web:52ec259a8c63a6b699d650",
-    measurementId: "G-SEM2VBCXCD"
+    appId: "1:274433923057:web:25585792e9ca2bf199d650",
+    measurementId: "G-9MPQ2D4K9P"
 }
  firebase.initializeApp(config)
 
