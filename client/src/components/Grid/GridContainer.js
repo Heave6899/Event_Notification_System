@@ -16,14 +16,15 @@ const useStyles = makeStyles(styles);
 
 export default function GridContainer(props) {
   const classes = useStyles();
-  const { children, ...rest } = props;
+  const { children, justify, ...rest } = props;
   return (
-    <Grid container {...rest} className={classes.grid}>
+    <Grid container {...rest} className={classes.grid} justify={justify}>
       {children}
     </Grid>
   );
 }
 
 GridContainer.propTypes = {
-  children: PropTypes.node
+  children: PropTypes.node,
+  justify: PropTypes.string
 };
