@@ -11,18 +11,23 @@ function Application() {
     const hist = createBrowserHistory();
 
     return (
-      <Router history={hist}>
-          <Switch>
-          user ?
-            <Route path="/admin" component={Admin} />
-            <Redirect from="/" to="/admin/dashboard" />
-          :
-            <Route path="/login" component={SignIn} />
-            <Route path="/signup" component={SignUp} />
-            <Route path="/passwordreset" component={PasswordReset} />
-            <Redirect to={{ pathname: '/login'}} />
-          </Switch>
-        </Router>
+      <p>{user}</p>
+
+
+
+
+      // <Router history={hist}>
+      //     <Switch>
+      //     user ?
+      //       <Route path="/admin" component={Admin} />
+      //       <Redirect from="/" to="/admin/dashboard" />
+      //     :
+      //       <Route path="/login" component={SignIn} />
+      //       <Route path="/signup" component={SignUp} />
+      //       <Route path="/passwordreset" component={PasswordReset} />
+      //       <Redirect to={{ pathname: '/login'}} />
+      //     </Switch>
+      //   </Router>
     );
   }
   export default Application;

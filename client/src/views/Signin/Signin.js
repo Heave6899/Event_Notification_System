@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState,useEffect } from "react";
 import { makeStyles } from "@material-ui/core/styles";
 import GridItem from "components/Grid/GridItem.js";
 import GridContainer from "components/Grid/GridContainer.js";
@@ -11,6 +11,9 @@ import CardFooter from "components/Card/CardFooter.js";
 import { container } from "assets/jss/material-dashboard-react.js";
 import { auth, signInWithGoogle, sendSignInLinkToEmail } from "Firebase_Functions/Auth"
 import { Link } from 'react-router-dom'
+import App from '../../App'
+import { useHistory } from "react-router-dom";
+
 const styles = {
     cardCategoryWhite: {
         color: "rgba(255,255,255,.62)",
@@ -46,14 +49,20 @@ export default function SignIn() {
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
     const [error, setError] = useState(null);
+    const history = useHistory();
     const signInWithEmailAndPasswordHandler =
         (event, email, password) => {
             event.preventDefault();
-            auth.signInWithEmailAndPassword(email, password).catch(error => {
+            auth.signInWithEmailAndPassword(email, password).then(()=>{}).catch(error => {
                 setError("Error signing in with password and email!");
                 console.error("Error signing in with password and email", error);
             });
         };
+        useEffect(() => {
+            auth.onAuthStateChanged( user => {
+            history.push('/');
+            })
+          },[])
     const onChangeHandler = (event) => {
         const { name, value } = event.currentTarget;
 
@@ -108,7 +117,7 @@ export default function SignIn() {
                             </GridContainer>
                         </CardBody>
                         <CardFooter>
-                            <Button color="primary" onClick={(event) => { signInWithEmailAndPasswordHandler(event, email, password) }}>SignIn with password</Button>
+                            {/* <Button color="primary" onClick={(event) => { signInWithEmailAndPasswordHandler(event, email, password) }}>SignIn with password</Button> */}
                             <Link to="/passwordreset"><Button color="primary">Forgot Password?</Button></Link>
                             <Button color="primary" onClick={() => signInWithGoogle()}>SignIn using Google</Button>
                             <Button color="primary" onClick={() => sendSignInLinkToEmail(email)}>SignIn with Link</Button>

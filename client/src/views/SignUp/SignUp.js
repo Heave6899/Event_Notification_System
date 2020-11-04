@@ -11,6 +11,8 @@ import CardFooter from "components/Card/CardFooter.js";
 import {container} from "assets/jss/material-dashboard-react.js";
 import {auth, signInWithGoogle, sendSignInLinkToEmail} from "Firebase_Functions/Auth"
 import {Link} from 'react-router-dom'
+import { useHistory } from "react-router-dom";
+
 const styles = {
     cardCategoryWhite: {
         color: "rgba(255,255,255,.62)",
@@ -43,17 +45,22 @@ const useStyles = makeStyles(styles);
 
 export default function SignIn() {
     const classes = useStyles();
+    const history = useHistory();
+    const [bc, setBC] = React.useState(false);
+
         const [email, setEmail] = useState('');
         const [password, setPassword] = useState('');
         const [error, setError] = useState(null);
-        const signInWithEmailAndPasswordHandler = 
-                (event,email, password) => {
+        const signUpWithEmailAndPasswordHandler = 
+               async (event,email, password) => {
                 event.preventDefault();
-                auth.signInWithEmailAndPassword(email, password).catch(error => {
-                    setError("Error signing in with password and email!");
-                    console.error("Error signing in with password and email", error);
-                  });
-        };
+                try {
+                    await auth.createUserWithEmailAndPassword(email, password);
+                    history.push("/");
+                  } catch (error) {
+                    setError("Error signing up with password and email!");
+                console.error("Error signing up with password and email", error);   
+                  }        };
           const onChangeHandler = (event) => {
               const {name, value} = event.currentTarget;
     
@@ -67,6 +74,7 @@ export default function SignIn() {
     return (
         <div className={classes.container, classes.content}>
             <GridContainer>
+            
                 <GridItem xs={12} sm={12} md={12}>
                     <Card>
                         <CardHeader color="warning">
@@ -76,6 +84,11 @@ export default function SignIn() {
                         <CardBody>
                             <GridContainer>
                                 <GridItem xs={12} sm={12} md={12}>
+                                {error !== null && (
+                                        <div>
+                                            {error}
+                                        </div>
+                                    )}
                                     <CustomInput
                                         labelText="Email address"
                                         id="email-address"
@@ -103,9 +116,7 @@ export default function SignIn() {
                             </GridContainer>
                         </CardBody>
                         <CardFooter>
-                            <Button color="primary" onClick = {(event) => {signInWithEmailAndPasswordHandler(event, email, password)}}>SignIn with password</Button>
-                            <Button color="primary" onClick = {() => signInWithGoogle()}>SignIn using Google</Button>
-                            <Button color="primary" onClick = {()=> sendSignInLinkToEmail(email)}>SignIn with Link</Button>
+                            <Button color="primary" onClick = {(event) => {signUpWithEmailAndPasswordHandler(event, email, password)}}>SignUp</Button>
                             <Link to ='/login' ><Button color="primary">Sign In</Button></Link>
                         </CardFooter>
                     </Card>

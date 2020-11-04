@@ -1,7 +1,9 @@
-import React from "react";
+import React, {useState, useEffect } from 'react'
 import ReactDOM from "react-dom";
 import { createBrowserHistory } from "history";
 import { Router, Route, Switch, Redirect } from "react-router-dom";
+import App from "App";
+import {auth, generateUserDocument} from "./Firebase_Functions/Auth";
 
 // core components
 import Admin from "layouts/Admin.js";
@@ -14,15 +16,15 @@ import Application from 'Application'
 const hist = createBrowserHistory();
 
 ReactDOM.render(
-  // <Router history={hist}>
-  //   <Switch>
-  //     <Route path="/login" component={SignIn} />
-  //     <Route path="/signup" component={SignUp} />
-  //     <Route path="/passwordreset" component={PasswordReset} />
-  //     <PrivateRoute path="/admin" component={Admin} />
-  //     <Redirect from="/" to="/admin/dashboard" />
-  //   </Switch>
-  // </Router>
-  <Application />,
+  <Router history={hist}>
+    <Switch>
+      <Route path="/login" component={SignIn} />
+      <Route path="/signup" component={SignUp} />
+      <Route path="/passwordreset" component={PasswordReset} />
+      <Route path="/admin" component={Admin} />
+      <App />
+    </Switch>
+  </Router>,
+  //<Application /> <Redirect from="/" to="/admin/dashboard" />,
   document.getElementById("root")
 );

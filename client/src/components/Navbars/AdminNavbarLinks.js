@@ -11,7 +11,9 @@ import Hidden from "@material-ui/core/Hidden";
 import Poppers from "@material-ui/core/Popper";
 import Divider from "@material-ui/core/Divider";
 // @material-ui/icons
+import { useHistory } from "react-router-dom";
 import App from "../../App";
+import {auth, generateUserDocument} from "../../Firebase_Functions/Auth";
 
 import Person from "@material-ui/icons/Person";
 import Notifications from "@material-ui/icons/Notifications";
@@ -27,6 +29,7 @@ const useStyles = makeStyles(styles);
 
 export default function AdminNavbarLinks() {
   const classes = useStyles();
+  const history = useHistory();
   const [openNotification, setOpenNotification] = React.useState(null);
   const [openProfile, setOpenProfile] = React.useState(null);
   const handleClickNotification = event => {
@@ -49,9 +52,12 @@ export default function AdminNavbarLinks() {
   const handleCloseProfile = () => {
     setOpenProfile(null);
   };
+  const handleLogout = () => {auth.signOut();
+    history.push("/");
+  }
+  const currentUser = auth.currentUser;
   return (
     <div>
-      <App />
       <div className={classes.searchWrapper}>
         <CustomInput
           formControlProps={{
@@ -200,7 +206,7 @@ export default function AdminNavbarLinks() {
                       onClick={handleCloseProfile}
                       className={classes.dropdownItem}
                     >
-                      Profile
+                      {currentUser?(currentUser.displayName):('Profile')}
                     </MenuItem>
                     <MenuItem
                       onClick={handleCloseProfile}
@@ -210,7 +216,7 @@ export default function AdminNavbarLinks() {
                     </MenuItem>
                     <Divider light />
                     <MenuItem
-                      onClick={handleCloseProfile}
+                      onClick={handleLogout}
                       className={classes.dropdownItem}
                     >
                       Logout
