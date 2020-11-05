@@ -1,5 +1,8 @@
 import React, {  Component } from 'react'
 import firebase from './Firebase_Functions/Firebase'
+import AutoCompletedText from './views/AutoComplete/AutoCompletedText';
+import './views/AutoComplete/App.css';
+
 
 export default class App extends Component {
   componentDidMount(){
@@ -13,6 +16,7 @@ export default class App extends Component {
     })
   }
   render() {
-    return ( <div> </div>)
+    return ( <div>
+      <AutoCompletedText/> </div>)
     }
   }
